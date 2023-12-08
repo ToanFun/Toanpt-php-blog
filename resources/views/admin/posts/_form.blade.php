@@ -1,80 +1,80 @@
 @php
-    $updated_at = old('updated_at', (isset($post) ? $post->updated_at->format('Y-m-d\TH:i') : null));
+	$updated_at = old('updated_at', (isset($post) ? $post->updated_at->format('Y-m-d\TH:i') : null));
 @endphp
 
 <div class="form-group mb-3">
-    <label class="form-label" for="title">
-        @lang('posts.attributes.title')
-    </label>
+	<label class="form-label" for="title">
+		@lang('posts.attributes.title')
+	</label>
 
-    <input
-        type="text"
-        id="title"
-        name="title"
-        @class(['form-control', 'is-invalid' => $errors->has('title')])
-        required
-        value="{{ old('title', $post ?? null) }}"
-    >
+	<input
+		type="text"
+		id="title"
+		name="title"
+		@class(['form-control', 'is-invalid' => $errors->has('title')])
+		required
+		value="{{ old('title', $post ?? null) }}"
+	>
 
-    @error('title')
-        <span class="invalid-feedback">{{ $message }}</span>
-    @enderror
+	@error('title')
+		<span class="invalid-feedback">{{ $message }}</span>
+	@enderror
 </div>
 
 <div class="row">
-    <div class="form-group mb-3 col-md-6">
-        <label class="form-label" for="author_id">
-            @lang('posts.attributes.author')
-        </label>
+	<div class="form-group mb-3 col-md-6">
+		<label class="form-label" for="author_id">
+			@lang('posts.attributes.author')
+		</label>
 
-        <select name="author_id" id="author_id" @class(['form-control', 'is-invalid' => $errors->has('author_id')]) required>
-            @foreach ($users as $id => $name)
-                <option value="{{ $id }}" @selected(old('author_id', $post ?? null) == $id)>
-                    {{ $name }}
-                </option>
-            @endforeach
-        </select>
+		<select name="author_id" id="author_id" @class(['form-control', 'is-invalid' => $errors->has('author_id')]) required>
+			@foreach ($users as $id => $name)
+				<option value="{{ $id }}" @selected(old('author_id', $post ?? null) == $id)>
+					{{ $name }}
+				</option>
+			@endforeach
+		</select>
 
-        @error('author_id')
-            <span class="invalid-feedback">{{ $message }}</span>
-        @enderror
-    </div>
+		@error('author_id')
+			<span class="invalid-feedback">{{ $message }}</span>
+		@enderror
+	</div>
 
-    <div class="form-group mb-3 col-md-6">
-        <label class="form-label" for="updated_at">
-            @lang('posts.attributes.posted_at')
-        </label>
+	<div class="form-group mb-3 col-md-6">
+		<label class="form-label" for="updated_at">
+			@lang('posts.attributes.posted_at')
+		</label>
 
-        <input
-            type="datetime-local"
-            name="updated_at"
-            id="updated_at"
-            @class(['form-control', 'is-invalid' => $errors->has('updated_at')])
-            required
-            value="{{ $updated_at }}"
-        >
+		<input
+			type="datetime-local"
+			name="updated_at"
+			id="updated_at"
+			@class(['form-control', 'is-invalid' => $errors->has('updated_at')])
+			required
+			value="{{ $updated_at }}"
+		>
 
-        @error('updated_at')
-            <span class="invalid-feedback">{{ $message }}</span>
-        @enderror
-    </div>
+		@error('updated_at')
+			<span class="invalid-feedback">{{ $message }}</span>
+		@enderror
+	</div>
 </div>
 
 <div class="form-group mb-3">
-    <label class="form-label" for="content">
-        @lang('posts.attributes.content')
-    </label>
+	<label class="form-label" for="content">
+		@lang('posts.attributes.content')
+	</label>
 
-    <textarea
-        name="content"
-        id="content"
-        cols="50"
-        rows="10"
-        required
-        @class(['form-control', 'is-invalid' => $errors->has('content')])
-    >{{ old('content', $post ?? null) }}</textarea>
+	<textarea
+		name="content"
+		id="content"
+		cols="50"
+		rows="10"
+		required
+		@class(['form-control', 'is-invalid' => $errors->has('content')])
+	>{{ old('content', $post ?? null) }}</textarea>
 
-    @error('content')
-        <span class="invalid-feedback">{{ $message }}</span>
-    @enderror
+	@error('content')
+		<span class="invalid-feedback">{{ $message }}</span>
+	@enderror
 </div>

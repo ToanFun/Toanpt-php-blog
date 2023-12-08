@@ -7,7 +7,7 @@
     <div class="mb-3">
       <small class="text-body-secondary">
         <a href="{{ route('users.show', $post->author) }}">
-            {{ $post->author->fullname }}
+          {{ $post->author->fullname }}
         </a>
       </small>,
 

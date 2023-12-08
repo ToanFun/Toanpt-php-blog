@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <p>
-        @lang('users.show') :
+	<p>
+		@lang('users.show') :
 
-        <a href="{{ route('users.show', $user) }}">
-            {{ route('users.show', $user) }}
-        </a>
-    </p>
+		<a href="{{ route('users.show', $user) }}">
+			{{ route('users.show', $user) }}
+		</a>
+	</p>
 
-    @include('admin/users/_form')
+	@include('admin/users/_form')
 @endsection

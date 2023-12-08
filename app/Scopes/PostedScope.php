@@ -18,7 +18,7 @@ class PostedScope implements Scope
 
         // if not connected or if connected but not admin
         if (!$user || !$user->isAdmin()) {
-            $builder->where('posted_at', '<=', now());
+            $builder->where('updated_at', '<=', now());
         }
     }
 }

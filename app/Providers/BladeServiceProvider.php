@@ -8,21 +8,21 @@ use Illuminate\Support\ServiceProvider;
 
 class BladeServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     */
-    public function boot(): void
-    {
-        Blade::if('admin', function () {
-            return Auth::check() && Auth::user()->isAdmin();
-        });
+	/**
+	 * Bootstrap the application services.
+	 */
+	public function boot(): void
+	{
+		Blade::if('admin', function () {
+			return Auth::check() && Auth::user()->isAdmin();
+		});
 
-        Blade::if('profile', function ($user) {
-            return Auth::check() && Auth::user()->id == $user->id;
-        });
+		Blade::if('profile', function ($user) {
+			return Auth::check() && Auth::user()->id == $user->id;
+		});
 
-        Blade::directive('humanize_date', function (string $params) {
-            return "<?php echo humanize_date($params); ?>";
-        });
-    }
+		Blade::directive('humanize_date', function (string $params) {
+			return "<?php echo humanize_date($params); ?>";
+		});
+	}
 }
