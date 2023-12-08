@@ -4,7 +4,7 @@
 	  <tr>
 		  <th>@lang('posts.attributes.title')</th>
 		  <th>@lang('posts.attributes.author')</th>
-		  <th>@lang('posts.attributes.posted_at')</th>
+		  <th>Updated</th>
 		  <th></th>
 	  </tr>
   </thead>
@@ -23,18 +23,20 @@
 			  </td>
 			  <td>@humanize_date($post->updated_at, 'd/m/Y H:i:s')</td>
 			  <td>
-				  <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary btn-sm">
-					  <x-icon name="edit" />
-				  </a>
+					<div class="d-flex flex-row justify-content-around">
+						<a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary btn-sm">
+							<x-icon name="edit" />
+						</a>
 
-				  <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="form-inline" data-confirm="@lang('forms.posts.delete')">
-					  @method('DELETE')
-					  @csrf
+						<form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="form-inline" data-confirm="@lang('forms.posts.delete')">
+							@method('DELETE')
+							@csrf
 
-					  <button type="submit" name="submit" class="btn btn-outline-danger btn-sm">
-						  <x-icon name="trash" />
-					  </button>
-				  </form>
+							<button type="submit" name="submit" class="btn btn-outline-danger btn-sm">
+								<x-icon name="trash" />
+							</button>
+						</form>
+					</div>
 			  </td>
 		  </tr>
 	  @endforeach
