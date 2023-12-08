@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [PostController::class, 'index'])->name('home');
+Route::resource('posts', PostController::class)->only('show');
+Route::get('/author/{user}', [UserController::class, 'show'])->name('users.show');
+
+Route::middleware('auth')->group(function () {
+	Route::get('/profile', [UserController::class, 'edit'])->name('users.edit');
+	Route::patch('/profile', [UserController::class, 'update'])->name('users.update');
+	Route::delete('/profile', [UserController::class, 'destroy'])->name('users.destroy');
 });
+
+require __DIR__.'/auth.php';
+
+Auth::routes();

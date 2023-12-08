@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\belongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -42,4 +46,84 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function getFullnameAttribute(): string
+    {
+        return Str::title($this->name);
+    }
+
+    /**
+     * Scope a query to only include users registered last week.
+     */
+    public function scopeLastWeek(Builder $query): Builder
+    {
+        return $query->whereBetween('email_verified_at', [carbon('1 week ago'), now()])
+            ->latest();
+    }
+
+    /**
+     * Scope a query to order users by latest registered.
+     */
+    public function scopeLatest(Builder $query): Builder
+    {
+        return $query->orderBy('email_verified_at', 'desc');
+    }
+
+    /**
+     * Scope a query to filter available author users.
+     */
+    public function scopeAuthors(Builder $query): Builder
+    {
+        return $query->whereHas('roles', function ($query) {
+            $query->where('roles.name', Role::ROLE_ADMIN)
+                ->orWhere('roles.name', Role::ROLE_EDITOR);
+        });
+    }
+
+    /**
+     * Check if the user can be an author
+     */
+    public function canBeAuthor(): bool
+    {
+        return $this->isAdmin() || $this->isEditor();
+    }
+
+    /**
+     * Check if the user has a role
+     */
+    public function hasRole(string $role): bool
+    {
+        return $this->roles->where('name', $role)->isNotEmpty();
+    }
+
+    /**
+     * Check if the user has role admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(Role::ROLE_ADMIN);
+    }
+
+    /**
+     * Check if the user has role editor
+     */
+    public function isEditor(): bool
+    {
+        return $this->hasRole(Role::ROLE_EDITOR);
+    }
+
+    /**
+     * Return the user's posts
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class, 'author_id');
+    }
+
+    /**
+     * Return the user's roles
+     */
+    public function roles(): belongsToMany
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
 }
