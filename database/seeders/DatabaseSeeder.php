@@ -47,7 +47,6 @@ class DatabaseSeeder extends Seeder
                 'author_id' => $user->id
             ],
             [
-                'posted_at' => now(),
                 'content' => "
                     hello<br><br>
                     lo.<br><br>

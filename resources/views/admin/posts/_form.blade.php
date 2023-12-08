@@ -42,7 +42,7 @@
 
 	<div class="form-group mb-3 col-md-6">
 		<label class="form-label" for="updated_at">
-			@lang('posts.attributes.posted_at')
+			@lang('posts.attributes.updated_at')
 		</label>
 
 		<input

@@ -4,7 +4,7 @@
 	  <tr>
 		  <th>@lang('posts.attributes.title')</th>
 		  <th>@lang('posts.attributes.author')</th>
-		  <th>@lang('posts.attributes.posted_at')</th>
+		  <th>Updated</th>
 		  <th></th>
 	  </tr>
   </thead>

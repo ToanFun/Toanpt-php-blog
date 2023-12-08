@@ -22,7 +22,6 @@ return [
 		'title' => 'Title',
 		'content' => 'Content',
 		'author' => 'Author',
-		'posted_at' => 'Posted at',
 	],
 
 	'placeholder' => [
