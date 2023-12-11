@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Helpers\Constants\PostConstant;
 
 class User extends Authenticatable
 {
@@ -71,7 +72,7 @@ class User extends Authenticatable
 		return [
 			'user' => $user,
 			'posts_count' => $user->posts()->count(),
-			'posts' => $user->posts()->limit(4)->get()
+			'posts' => $user->posts()->limit(PostConstant::POSTS_SHOWING_IN_USER_DETAIL_LIMIT)->get()
 		];
 	}
 }

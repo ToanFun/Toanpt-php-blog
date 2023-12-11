@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Scopes\PostScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Helpers\Constants\PostConstant;
 
 class Post extends Model
 {
@@ -54,7 +55,7 @@ class Post extends Model
 		{
 		  $post->where('title','like','%'. $search_key .'%')->orWhere('content','like','%'. $search_key .'%');
 		}
-		$result = $post->paginate(10);
+		$result = $post->paginate(PostConstant::POSTS_PER_PAGE_LIMIT);
 		return [
 			'posts' => $result,
 			'countPosts' => $result->total()
