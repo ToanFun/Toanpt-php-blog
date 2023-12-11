@@ -13,6 +13,6 @@ class PostScope implements Scope
 	 */
 	public function apply(Builder $builder, Model $model): void
 	{
-		$builder->whereNull("deleted_at")->orderByDesc("updated_at");
+		$builder->orderByDesc("updated_at");
 	}
 }
