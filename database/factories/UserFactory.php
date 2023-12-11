@@ -42,7 +42,7 @@ class UserFactory extends Factory
 		]);
 	}
 
-	public function admin_account(): Factory
+	public function adminAccount(): Factory
 	{
 		return $this->state(function () {
 			return [
@@ -52,7 +52,7 @@ class UserFactory extends Factory
 			];
 		});
 	}
-	public function editor_account(): Factory
+	public function editorAccount(): Factory
 	{
 		return $this->state(function () {
 			return [

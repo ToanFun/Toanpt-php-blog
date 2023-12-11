@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -68,7 +69,11 @@ class User extends Authenticatable
 	 */
 	public function getInfo(int $userId): array
 	{
-		$user = User::with('posts')->find($userId);
+		$user = User::find($userId);
+		if (!$user) {
+			throw new ModelNotFoundException('User not found');
+		}
+		$user->load('posts');
 		return [
 			'user' => $user,
 			'posts_count' => $user->posts()->count(),

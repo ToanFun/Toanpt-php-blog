@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostController extends Controller
 {
@@ -34,9 +33,6 @@ class PostController extends Controller
 	 */
 	public function show(Request $request, int $postId): View
 	{
-		if (!$this->post->find($postId)) {
-			throw new ModelNotFoundException;
-		}
 		$post = $this->post->getPost($postId);
 		return view("posts.show", [
 			"post"=> $post,

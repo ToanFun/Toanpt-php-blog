@@ -13,11 +13,11 @@ class Icon extends Component
 	 */
 	public function __construct(
 		public string $name,
-    public string $prefix = 'fa-solid'
+		public string $prefix = 'fa-solid'
 	)
 	{
 		$this->name = $name;
-    $this->prefix = $prefix;
+		$this->prefix = $prefix;
 	}
 
 	/**

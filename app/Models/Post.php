@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Scopes\PostScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Helpers\Constants\PostConstant;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Post extends Model
 {
@@ -67,6 +68,10 @@ class Post extends Model
 	 */
 	public function getPost(int $postId): Post
 	{
-		return Post::find($postId)->load('author');
+		$post = Post::find($postId);
+		if (!$post) {
+			throw new ModelNotFoundException('Post not found');
+		}
+		return $post->load('author');
 	}
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\View\View;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class UserController extends Controller
 {
 	protected User $user;
@@ -20,9 +20,6 @@ class UserController extends Controller
 	 */
 	public function show(Request $request, int $userId): View
 	{
-		if (!$this->user->find($userId)) {
-			throw new ModelNotFoundException;
-		}
 		$info = $this->user->getInfo($userId);
 		return view("users.show", [
 			'user' => $info['user'],
