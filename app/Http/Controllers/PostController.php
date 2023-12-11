@@ -15,6 +15,10 @@ class PostController extends Controller
 	{
 		$this->post = $post;
 	}
+
+	/**
+	 * Show all posts
+	*/
 	public function index(Request $request): View
 	{
 		$searchKey = $request->input("key");
@@ -24,6 +28,10 @@ class PostController extends Controller
 			"count" => $results["countPosts"],
 		]);
 	}
+
+	/**
+	 * Show post's detail
+	 */
 	public function show(Request $request, int $postId): View
 	{
 		if (!$this->post->find($postId)) {

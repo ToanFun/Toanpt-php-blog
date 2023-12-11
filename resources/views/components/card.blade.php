@@ -18,4 +18,4 @@
 			{{ $footer }}
 		</div>
 	@endif
-  </div>
+</div>

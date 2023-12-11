@@ -46,16 +46,25 @@ class User extends Authenticatable
 		'password' => 'hashed',
 	];
 
+	/**
+	 * Show relationship with posts table
+	 */
 	public function posts(): HasMany
 	{
 		return $this->hasMany(Post::class, 'author_id');
 	}
 
+	/**
+	 * Show relationship with roles table
+	 */
 	public function roles(): BelongsToMany
 	{
 		return $this->belongsToMany(Role::class,'role_user','user_id','role_id');
 	}
 
+	/**
+	 * Get all detail of user
+	 */
 	public function getInfo(int $userId): array
 	{
 		$user = User::with('posts')->find($userId);

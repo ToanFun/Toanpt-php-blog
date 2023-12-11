@@ -14,6 +14,10 @@ class UserController extends Controller
 		$this->user = $user;
 	}
 
+
+	/**
+	 * Show user's detail and lastest user's posts
+	 */
 	public function show(Request $request, int $userId): View
 	{
 		if (!$this->user->find($userId)) {

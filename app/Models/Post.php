@@ -34,26 +34,36 @@ class Post extends Model
 		static::addGlobalScope(new PostScope);
 	}
 
+	/**
+	 * Relationship of users table
+	 */
 	public function author(): BelongsTo
 	{
 		return $this->belongsTo(User::class, 'author_id');
 	}
 
+
+	/**
+	 * List all posts
+	 */
 	public function listPosts(?string $search_key): array
 	{
+		$post = Post::with('author');
+
 		if ($search_key)
 		{
-			$posts = Post::with('author')->where('title','like','%'. $search_key .'%')->orWhere('content','like','%'. $search_key .'%')->paginate(10);
+		  $post->where('title','like','%'. $search_key .'%')->orWhere('content','like','%'. $search_key .'%');
 		}
-		else
-		{
-			$posts = Post::with('author')->paginate(10);
-		}
+		$result = $post->paginate(10);
 		return [
-			'posts' => $posts,
-			'countPosts' => $posts->total()
+			'posts' => $result,
+			'countPosts' => $result->total()
 		];
 	}
+
+	/**
+	 * Show post detail
+	 */
 	public function getPost(int $postId): Post
 	{
 		return Post::find($postId)->load('author');
