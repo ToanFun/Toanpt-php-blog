@@ -48,13 +48,12 @@ class Post extends Model
 	/**
 	 * List all posts
 	 */
-	public function listPosts(?string $search_key): array
+	public function listPosts(array $search_keys): array
 	{
 		$post = Post::with('author');
-
-		if ($search_key)
+		if (isset($search_keys['key']))
 		{
-		  $post->where('title','like','%'. $search_key .'%')->orWhere('content','like','%'. $search_key .'%');
+		  $post->where('title','like','%'. $search_keys['key'] .'%')->orWhere('content','like','%'. $search_keys['key'] .'%');
 		}
 		$result = $post->paginate(PostConstant::POSTS_PER_PAGE_LIMIT);
 		return [

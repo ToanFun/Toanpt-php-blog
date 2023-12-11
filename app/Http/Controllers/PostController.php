@@ -20,8 +20,8 @@ class PostController extends Controller
 	*/
 	public function index(Request $request): View
 	{
-		$searchKey = $request->input("key");
-		$results = $this->post->listPosts($searchKey);
+		$searchKeys = $request->only("key");
+		$results = $this->post->listPosts($searchKeys);
 		return view("posts.index", [
 			"posts" => $results["posts"],
 			"count" => $results["countPosts"],
