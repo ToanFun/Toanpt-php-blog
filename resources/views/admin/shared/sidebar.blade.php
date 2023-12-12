@@ -17,5 +17,4 @@
 		  <span class="nav-link-text">Users</span>
 	  </a>
   </li>
-
 </ul>
