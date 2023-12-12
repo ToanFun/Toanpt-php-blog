@@ -13,9 +13,7 @@ class BladeServiceProvider extends ServiceProvider
 	 */
 	public function boot(): void
 	{
-		/**
-		 * Register directive for blade template
-		 */
+		//Register directive for blade template
 		Blade::directive('customizeDate', function (string $params) {
 			return "<?php echo customizeDate($params); ?>";
 		});
