@@ -49,6 +49,30 @@ class User extends Authenticatable
 	];
 
 	/**
+	 * Check if the user has a role
+	 */
+	public function hasRole(string $role): bool
+	{
+		return $this->roles->where('name', $role)->isNotEmpty();
+	}
+
+	/**
+	 * Check if the user has role admin
+	 */
+	public function isAdmin(): bool
+	{
+		return $this->hasRole(Role::ROLE_ADMIN);
+	}
+
+	/**
+	 * Check if the user has role editor
+	 */
+	public function isEditor(): bool
+	{
+		return $this->hasRole(Role::ROLE_EDITOR);
+	}
+
+	/**
 	 * Show relationship with posts table
 	 */
 	public function posts(): HasMany
@@ -79,5 +103,22 @@ class User extends Authenticatable
 			'posts_count' => $user->posts()->count(),
 			'posts' => $user->posts()->limit(PostConstant::POSTS_SHOWING_IN_USER_DETAIL_LIMIT)->get()
 		];
+	}
+	/**
+	 * Create new user account
+	 */
+	public function createNewUser(array $attributes): User|null
+	{
+		$user = User::create($attributes);
+		$user->save();
+		return $user->fresh();
+	}
+
+	/**
+	 * Count newest users in week
+	 */
+	public function countNewestUsersInWeek(): int
+	{
+		return User::whereBetween('email_verified_at', [parseTextToDate('1 week ago'), now()])->orderBy('email_verified_at', 'desc')->count();
 	}
 }

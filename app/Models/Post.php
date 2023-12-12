@@ -73,4 +73,12 @@ class Post extends Model
 		}
 		return $post->load('author');
 	}
+
+	/**
+	 * Count newest posts in week
+	 */
+	public function countNewestPostsInWeek(): int
+	{
+		return Post::whereBetween('updated_at', [parseTextToDate('1 week ago'), now()])->count();
+	}
 }
