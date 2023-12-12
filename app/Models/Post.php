@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,7 @@ use App\Models\Scopes\PostScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Helpers\Constants\PostConstant;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class Post extends Model
 {
@@ -80,5 +82,48 @@ class Post extends Model
 	public function countNewestPostsInWeek(): int
 	{
 		return Post::whereBetween('updated_at', [parseTextToDate('1 week ago'), now()])->count();
+	}
+
+	/**
+	 * List posts by admin
+	 */
+	public function ListAllPosts(): Paginator
+	{
+		return Post::with('author')->paginate(PostConstant::POSTS_PER_ADMIN_PAGE_LIMIT);
+	}
+
+	/**
+	 * Update post
+	 */
+
+	public function updatePost(int $postId, array $attributes): Post
+	{
+		$post = Post::find($postId);
+		if (!$post) {
+			throw new ModelNotFoundException('');
+		}
+		$post->fill($attributes);
+		$post->save();
+		return $post->fresh();
+	}
+
+	/**
+	 * Create post
+	 */
+	public function createPost(array $attributes): Post|null
+	{
+		return Post::create($attributes);
+	}
+
+	/**
+	 * Delete post
+	 */
+	public function deletePost(int $postId): int
+	{
+		$post = Post::find($postId);
+		if (!$post) {
+			throw new ModelNotFoundException('');
+		}
+		return $post->delete();
 	}
 }
