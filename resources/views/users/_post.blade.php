@@ -4,7 +4,6 @@
       {{ $post->title }}
     </a>
   </h4>
-
   <p class="card-text">
     <small class="text-body-secondary">@customizeDate($post->updated_at)</small><br>
   </p>
