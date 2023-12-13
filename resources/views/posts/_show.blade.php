@@ -5,7 +5,6 @@
         {{ $post->title }}
       </a>
     </h4>
-
     <p class="card-text">
       <small class="text-body-secondary">
         <a href="{{ route('users.show', $post->author->id) }}" data-turbo-frame="_top">
