@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Helpers\Constants\PostConstant;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Contracts\Pagination\Paginator;
+use App\Exceptions;
 
 class Post extends Model
 {
@@ -94,15 +95,21 @@ class Post extends Model
 	 * Update post
 	 */
 
-	public function updatePost(int $postId, array $attributes): Post
+	public function updatePost(int $postId, array $attributes): Post|null
 	{
 		$post = Post::find($postId);
 		if (!$post) {
 			throw new ModelNotFoundException('');
 		}
-		$post->fill($attributes);
-		$post->save();
-		return $post->fresh();
+		try {
+			$post->fill($attributes);
+			$post->save();
+			return $post->fresh();
+		}
+		catch (\Exception $e) {
+			return null;
+		}
+
 	}
 
 	/**
