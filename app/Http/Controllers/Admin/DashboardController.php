@@ -11,11 +11,13 @@ class DashboardController extends Controller
 {
 	protected Post $post;
 	protected User $user;
+
 	public function __construct(Post $post, User $user)
 	{
 		$this->post = $post;
 		$this->user = $user;
 	}
+
 	/**
 	 * Show the application dashboard.
 	 *
