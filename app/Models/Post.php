@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -72,5 +71,13 @@ class Post extends Model
 			throw new ModelNotFoundException('Post not found');
 		}
 		return $post->load('author');
+	}
+
+	/**
+	 * Count newest posts in week
+	 */
+	public function countNewestPostsInWeek(): int
+	{
+		return Post::whereBetween('updated_at', [parseTextToDate('1 week ago'), now()])->count();
 	}
 }
