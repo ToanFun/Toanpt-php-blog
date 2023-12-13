@@ -26,7 +26,6 @@ class Post extends Model
 		'content',
 	];
 
-
 	/**
 	 * The "booting" method of the model.
 	 */
@@ -43,7 +42,6 @@ class Post extends Model
 	{
 		return $this->belongsTo(User::class, 'author_id');
 	}
-
 
 	/**
 	 * List all posts
@@ -67,11 +65,7 @@ class Post extends Model
 	 */
 	public function getPost(int $postId): Post
 	{
-		$post = Post::find($postId);
-		if (!$post) {
-			throw new ModelNotFoundException('Post not found');
-		}
-		return $post->load('author');
+		return Post::with('author')->findOrFail($postId);
 	}
 
 	/**

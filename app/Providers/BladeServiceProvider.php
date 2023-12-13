@@ -16,7 +16,7 @@ class BladeServiceProvider extends ServiceProvider
 	{
 		//Register directive for blade template
 		Blade::directive('customizeDate', function (string $params) {
-			return "<?php echo customizeDate($params); ?>";
+			return "<?php printf('%s', customizeDate($params)); ?>";
 		});
 		//Register directive admin
 		Blade::if('admin', function () {
