@@ -11,16 +11,6 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
 	/**
-	 * The path to your application's "home" route.
-	 *
-	 * Typically, users are redirected here after authentication.
-	 *
-	 * @var string
-	 */
-	public const HOME = '/';
-	public const HOME_ADMIN = '/admin/dashboard';
-
-	/**
 	 * Define your route model bindings, pattern filters, and other route configuration.
 	 */
 	public function boot(): void
@@ -36,6 +26,7 @@ class RouteServiceProvider extends ServiceProvider
 
 			Route::middleware('web')
 				->group(base_path('routes/web.php'));
+
 			Route::prefix('admin')
 				->middleware(['web', 'auth', 'role:admin', 'verified'])
 				->as('admin.')

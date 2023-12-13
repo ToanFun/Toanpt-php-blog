@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Scopes\PostScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Helpers\Constants\PostConstant;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class Post extends Model
@@ -26,7 +25,6 @@ class Post extends Model
 		'content',
 	];
 
-
 	/**
 	 * The "booting" method of the model.
 	 */
@@ -43,7 +41,6 @@ class Post extends Model
 	{
 		return $this->belongsTo(User::class, 'author_id');
 	}
-
 
 	/**
 	 * List all posts
@@ -67,11 +64,7 @@ class Post extends Model
 	 */
 	public function getPost(int $postId): Post
 	{
-		$post = Post::find($postId);
-		if (!$post) {
-			throw new ModelNotFoundException('Post not found');
-		}
-		return $post->load('author');
+		return Post::with('author')->findOrFail($postId);
 	}
 
 	/**
@@ -93,15 +86,10 @@ class Post extends Model
 	/**
 	 * Update post
 	 */
-
 	public function updatePost(int $postId, array $attributes): Post
 	{
-		$post = Post::find($postId);
-		if (!$post) {
-			throw new ModelNotFoundException('');
-		}
-		$post->fill($attributes);
-		$post->save();
+		$post = Post::findOrFail($postId);
+		$post->update($attributes);
 		return $post->fresh();
 	}
 
@@ -118,10 +106,7 @@ class Post extends Model
 	 */
 	public function deletePost(int $postId): int
 	{
-		$post = Post::find($postId);
-		if (!$post) {
-			throw new ModelNotFoundException('');
-		}
+		$post = Post::findOrFail($postId);
 		return $post->delete();
 	}
 }
