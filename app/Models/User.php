@@ -92,11 +92,7 @@ class User extends Authenticatable
 	 */
 	public function getInfo(int $userId): array
 	{
-		$user = User::find($userId);
-		if (!$user) {
-			throw new ModelNotFoundException('User not found');
-		}
-		$user->load('posts');
+		$user = User::with('posts')->findOrFail($userId);
 		return [
 			'user' => $user,
 			'posts_count' => $user->posts()->count(),
