@@ -7,6 +7,5 @@
 			{{ route('users.show', $user->id) }}
 		</a>
 	</p>
-
 	@include('admin/users/_form')
 @endsection

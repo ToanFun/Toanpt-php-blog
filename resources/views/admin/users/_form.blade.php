@@ -12,7 +12,6 @@
         <span class="invalid-feedback">{{ $message }}</span>
       @enderror
     </div>
-
     <div class="form-group mb-3 col-md-6">
       <label class="form-label" for="email">
         @lang('users.attributes.email')
@@ -24,7 +23,6 @@
       @enderror
     </div>
   </div>
-
   <div class="row">
     <div class="form-group mb-3 col-md-6">
       <label class="form-label" for="password">
@@ -36,12 +34,10 @@
         <span class="invalid-feedback">{{ $message }}</span>
       @enderror
     </div>
-
     <div class="form-group mb-3 col-md-6">
       <label class="form-label" for="password_confirmation">
         @lang('users.attributes.password_confirmation')
       </label>
-
       <input type="password" id="password_confirmation" name="password_confirmation"
         @class(['form-control', 'is-invalid' => $errors->has('password_confirmation')])
         placeholder="@lang('users.placeholder.password_confirmation')">
@@ -50,7 +46,6 @@
       @enderror
     </div>
   </div>
-
   <div class="form-group mb-3">
     <label class="form-label" for="roles">
       @lang('users.attributes.roles')
@@ -64,12 +59,10 @@
       </div>
     @endforeach
   </div>
-
   <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
     <x-icon name="chevron-left" />
     Back
   </a>
-
   <button type="submit" class="btn btn-primary">
     <x-icon name="save" />
     Update
