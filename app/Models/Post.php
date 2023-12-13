@@ -63,7 +63,6 @@ class Post extends Model
 	 */
 	public function getPost(int $postId): Post
 	{
-		$post = Post::with('author')->findOrFail($postId);
-		return $post;
+		return Post::with('author')->findOrFail($postId);
 	}
 }
