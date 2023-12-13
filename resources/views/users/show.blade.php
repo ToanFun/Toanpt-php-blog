@@ -19,11 +19,7 @@
     <div class="col-md-6">
       <h2>Lastest Posts</h2>
       <div class="space-y-3">
-        @if ($posts->isNotEmpty())
-          @each('users/_post', $posts, 'post')
-        @else
-          <p>There is no post for the moment.</p>
-        @endif
+        @each('users/_post', $posts, 'post', 'posts/_empty')
       </div>
     </div>
   </div>

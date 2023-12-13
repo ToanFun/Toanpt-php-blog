@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Scopes\PostScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Helpers\Constants\PostConstant;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Post extends Model
 {
@@ -25,7 +23,6 @@ class Post extends Model
 		'title',
 		'content',
 	];
-
 
 	/**
 	 * The "booting" method of the model.
@@ -43,7 +40,6 @@ class Post extends Model
 	{
 		return $this->belongsTo(User::class, 'author_id');
 	}
-
 
 	/**
 	 * List all posts
@@ -67,10 +63,7 @@ class Post extends Model
 	 */
 	public function getPost(int $postId): Post
 	{
-		$post = Post::find($postId);
-		if (!$post) {
-			throw new ModelNotFoundException('Post not found');
-		}
-		return $post->load('author');
+		$post = Post::with('author')->findOrFail($postId);
+		return $post;
 	}
 }
