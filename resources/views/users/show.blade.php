@@ -20,12 +20,9 @@
       </x-card>
     </div>
   </div>
-
   <div class="row">
-
     <div class="col-md-6">
       <h2>Lastest Posts</h2>
-
       <div class="space-y-3">
         @if ($posts->isNotEmpty())
           @each('users/_post', $posts, 'post')
