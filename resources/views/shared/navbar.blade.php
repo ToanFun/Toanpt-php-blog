@@ -24,10 +24,10 @@
 						  {{ Auth::user()->name }}
 					  </a>
 					  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						  <a href="#" class="dropdown-item">
+						  <a href="{{ route('users.show', Auth::id()) }}" class="dropdown-item">
 							  Public Profile
 						  </a>
-						  <a href="#" class="dropdown-item">
+						  <a href="{{ route('users.edit') }}" class="dropdown-item">
 							  Settings
 						  </a>
 						  <div class="dropdown-divider"></div>
