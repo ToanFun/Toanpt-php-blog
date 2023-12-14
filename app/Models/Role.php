@@ -34,5 +34,4 @@ class Role extends Model
 	{
 		return Role::all();
 	}
-
 }

@@ -26,7 +26,8 @@ class UserRequest extends FormRequest
       'name' => ['required', 'string', 'max:255', new AlphaName],
       'email' => 'required|email|unique:users,email,' . $this->user,
       'password' => 'nullable|confirmed',
-      'roles.*' => 'exists:roles,id'
+      'roles.*' => 'exists:roles,id',
+      'author_id' => 'nullable'
     ];
   }
 }

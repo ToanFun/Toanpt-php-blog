@@ -26,6 +26,7 @@ class User extends Authenticatable
 		'name',
 		'email',
 		'password',
+		'admin_id'
 	];
 
 	/**
@@ -149,11 +150,7 @@ class User extends Authenticatable
 	 */
 	public function getById(int $userId): User
 	{
-		$user = User::find($userId);
-		if (!$user) {
-			throw new ModelNotFoundException('');
-		}
-		return $user;
+		return User::findOrFail($userId);
 	}
 
 	/**
@@ -161,12 +158,8 @@ class User extends Authenticatable
 	 */
 	public function updateUserInfo(array $attributes, int $userId, array $roleIds): User
 	{
-		$user = User::find($userId);
-		if (!$user) {
-			throw new ModelNotFoundException('');
-		}
-		$user->fill($attributes);
-		$user->save();
+		$user = User::findOrFail($userId);
+		$user->update($attributes);
 		$user->roles()->sync($roleIds);
 		return $user;
 	}
