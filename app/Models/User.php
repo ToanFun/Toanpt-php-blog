@@ -163,5 +163,4 @@ class User extends Authenticatable
 		$user->roles()->sync($roleIds);
 		return $user;
 	}
-
 }
