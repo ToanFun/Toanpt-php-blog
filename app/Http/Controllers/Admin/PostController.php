@@ -15,11 +15,13 @@ class PostController extends Controller
 {
 	protected Post $post;
 	protected User $user;
+
 	public function __construct(Post $post, User $user)
 	{
 		$this->post = $post;
 		$this->user = $user;
 	}
+
 	/**
 	 * Show the application posts index.
 	 */
@@ -35,13 +37,17 @@ class PostController extends Controller
 	 */
 	public function edit(int $postId): View
 	{
-		$post = $this->post->getPost($postId);
-		$userIds = array_unique(array_filter([$post->author->id, $post->author->admin_id, Auth::id()]));
-		$users = $this->user->getAuthors($userIds);
-		return view('admin.posts.edit', [
-			'post' => $post,
-			'users' => $users,
-		]);
+		try {
+			$post = $this->post->getPost($postId);
+			$userIds = collect([$post->author->id, $post->author->admin_id, Auth::id()])->filter()->unique()->toArray();
+			$users = $this->user->getAuthors($userIds);
+			return view('admin.posts.edit', [
+				'post' => $post,
+				'users' => $users,
+			]);
+		} catch (\Exception $e) {
+			abort(404);
+		}
 	}
 
 	/**
@@ -49,11 +55,15 @@ class PostController extends Controller
 	 */
 	public function create(Request $request): View
 	{
-		$userIds = array_filter([Auth::id(), Auth::user()->admin_id]);
-		$users = $this->user->getAuthors($userIds);
-		return view('admin.posts.create', [
-			'users' => $users,
-		]);
+		try {
+			$userIds = collect([Auth::id(), Auth::user()->admin_id])->filter()->toArray();
+			$users = $this->user->getAuthors($userIds);
+			return view('admin.posts.create', [
+				'users' => $users,
+			]);
+		} catch (\Exception $e) {
+			abort(404);
+		}
 	}
 
 	/**
@@ -61,13 +71,13 @@ class PostController extends Controller
 	 */
 	public function store(PostRequest $request): RedirectResponse
 	{
-		$postParams = $request->only(['title', 'content', 'author_id']);
-
-		$post = $this->post->createPost($postParams);
-		if (! $post) {
+		try {
+			$postParams = $request->only(['title', 'content', 'author_id']);
+			$post = $this->post->createPost($postParams);
+			return redirect()->route('admin.posts.edit', $post->id)->withSuccess(__('posts.created'));
+		} catch (\Exception $e) {
 			return redirect()->route('admin.posts.create')->withErrors(__('posts.created_failed'));
 		}
-		return redirect()->route('admin.posts.edit', $post->id)->withSuccess(__('posts.created'));
 	}
 
 	/**
@@ -75,12 +85,13 @@ class PostController extends Controller
 	 */
 	public function update(PostRequest $request, int $postId): RedirectResponse
 	{
-		$updateParams = $request->only(['title', 'content']);
-		$post = $this->post->updatePost($postId, $updateParams);
-		if (!$post) {
+		try {
+			$updateParams = $request->only(['title', 'content']);
+			$post = $this->post->updatePost($postId, $updateParams);
+			return redirect()->route('admin.posts.edit', $post->id)->withSuccess(__('posts.updated'));
+		} catch (\Exception $e) {
 			return redirect()->route('admin.posts.edit',$postId)->withErrors(__('posts.updated_failed'));
 		}
-		return redirect()->route('admin.posts.edit', $post->id)->withSuccess(__('posts.updated'));
 	}
 
 	/**
@@ -88,9 +99,13 @@ class PostController extends Controller
 	 */
 	public function destroy(int $postId): RedirectResponse
 	{
-		if(!$this->post->deletePost($postId)){
+		try {
+			if(!$this->post->deletePost($postId)){
+				return redirect()->route('admin.posts.index')->withErrors(__('posts.deleted_failed'));
+			}
+			return redirect()->route('admin.posts.index')->withSuccess(__('posts.deleted'));
+		} catch (\Exception $e) {
 			return redirect()->route('admin.posts.index')->withErrors(__('posts.deleted_failed'));
 		}
-		return redirect()->route('admin.posts.index')->withSuccess(__('posts.deleted'));
 	}
 }

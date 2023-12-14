@@ -8,7 +8,6 @@
       <span class="invalid-feedback">{{ $message }}</span>
     @enderror
 	</div>
-
 	<div class="form-group mb-3 col-md-6">
     <label class="form-label" for="author_id">
 			@lang('posts.attributes.author')
@@ -25,7 +24,6 @@
 		@enderror
 	</div>
 </div>
-
 <div class="form-group mb-5">
 	<label class="form-label" for="content">
 		@lang('posts.attributes.content')

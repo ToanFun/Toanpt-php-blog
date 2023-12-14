@@ -4,6 +4,7 @@ return [
   'new_users' => 'new user|new users',
 	'count' => ':count user|:count users',
 	'updated' => 'Profile updated',
+	'updated_failed'=> 'Profile updated failed',
 
   'attributes' => [
 		'name' => 'Name',

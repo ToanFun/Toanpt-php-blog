@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Constants\CommonConstant;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -16,6 +16,7 @@ use Exception;
 class RegisterController extends Controller
 {
 	protected User $user;
+
 	public function __construct(User $user)
 	{
 		$this->user = $user;
@@ -45,7 +46,7 @@ class RegisterController extends Controller
 			$user = $this->user->createNewUser($data_user);
 			event(new Registered($user));
 			Auth::login($user);
-			return redirect(RouteServiceProvider::HOME);
+			return redirect(CommonConstant::HOME);
 		} catch (Exception $e) {
 			abort(500, $e->getMessage());
 		}

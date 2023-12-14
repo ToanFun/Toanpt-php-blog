@@ -8,8 +8,8 @@ use Illuminate\View\View;
 
 class PostController extends Controller
 {
-
 	protected Post $post;
+
 	public function __construct(Post $post)
 	{
 		$this->post = $post;
@@ -21,11 +21,15 @@ class PostController extends Controller
 	public function index(Request $request): View
 	{
 		$searchKeys = $request->only("key");
-		$results = $this->post->listPosts($searchKeys);
-		return view("posts.index", [
-			"posts" => $results["posts"],
-			"count" => $results["countPosts"],
-		]);
+		try {
+			$results = $this->post->listPosts($searchKeys);
+			return view("posts.index", [
+				"posts" => $results["posts"],
+				"count" => $results["countPosts"],
+			]);
+		} catch (\Exception $e) {
+			abort(404, $e->getMessage());
+		}
 	}
 
 	/**
@@ -33,9 +37,13 @@ class PostController extends Controller
 	 */
 	public function show(Request $request, int $postId): View
 	{
-		$post = $this->post->getPost($postId);
-		return view("posts.show", [
-			"post"=> $post,
-		]);
+		try {
+			$post = $this->post->getPost($postId);
+			return view("posts.show", [
+				"post"=> $post,
+			]);
+		} catch (\Exception $e) {
+			abort(404, $e->getMessage());
+		}
 	}
 }

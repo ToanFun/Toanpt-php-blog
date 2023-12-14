@@ -10,7 +10,6 @@
 			@admin
 				@include('admin.shared.sidebar')
 		  @endadmin
-
 		  <ul class="navbar-nav ms-auto">
 			  @guest
 					<li class="nav-item">
