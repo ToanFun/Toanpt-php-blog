@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Scopes\PostScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Helpers\Constants\PostConstant;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class Post extends Model
 {
@@ -72,5 +73,40 @@ class Post extends Model
 	public function countNewestPostsInWeek(): int
 	{
 		return Post::whereBetween('updated_at', [parseTextToDate('1 week ago'), now()])->count();
+	}
+
+	/**
+	 * List posts by admin
+	 */
+	public function ListAllPosts(): Paginator
+	{
+		return Post::with('author')->paginate(PostConstant::POSTS_PER_ADMIN_PAGE_LIMIT);
+	}
+
+	/**
+	 * Update post
+	 */
+	public function updatePost(int $postId, array $attributes): Post
+	{
+		$post = Post::findOrFail($postId);
+		$post->update($attributes);
+		return $post->fresh();
+	}
+
+	/**
+	 * Create post
+	 */
+	public function createPost(array $attributes): Post|null
+	{
+		return Post::create($attributes);
+	}
+
+	/**
+	 * Delete post
+	 */
+	public function deletePost(int $postId): int
+	{
+		$post = Post::findOrFail($postId);
+		return $post->delete();
 	}
 }

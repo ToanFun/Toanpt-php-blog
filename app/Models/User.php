@@ -70,6 +70,14 @@ class User extends Authenticatable
 		return $this->hasRole(Role::ROLE_EDITOR);
 	}
 
+	 /**
+	 * Check if the user can be an author
+	 */
+	public function canBeAuthor(): bool
+	{
+		return $this->isAdmin() || $this->isEditor();
+	}
+
 	/**
 	 * Show relationship with posts table
 	 */
@@ -112,5 +120,13 @@ class User extends Authenticatable
 	public function countNewestUsersInWeek(): int
 	{
 		return User::whereBetween('email_verified_at', [parseTextToDate('1 week ago'), now()])->orderBy('email_verified_at', 'desc')->count();
+	}
+
+	/**
+	 * Get all user has permission editing post
+	 */
+	public function getAuthors(array $userIds): array
+	{
+		return User::whereIn('id', $userIds)->orWhereIn('admin_id', $userIds)->pluck('name','id')->toArray();
 	}
 }
