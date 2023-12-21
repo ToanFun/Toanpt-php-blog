@@ -12,7 +12,7 @@
     @foreach($users as $user)
       <tr>
         <td>
-          <a href="{{ route('admin.users.edit', $user->id) }}">
+          <a href="{{ route('admin.users.edit', $user->id) }}" class="text-decoration-none">
             {{ $user->name }}
           </a>
         </td>
@@ -24,7 +24,7 @@
             @customizeDate($user->email_verified_at, 'd/m/Y H:i:s')
           @endif
         </td>
-        <td>
+        <td class="d-flex justify-content-end">
           <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary btn-sm">
             <x-icon name="edit" />
           </a>

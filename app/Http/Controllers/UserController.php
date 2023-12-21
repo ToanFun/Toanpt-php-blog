@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Admin\UserRequest;
+use App\Http\Requests\DestroyUserRequest;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -63,11 +64,8 @@ class UserController extends Controller
 	/**
 	 * Delete the user's account.
 	 */
-	public function destroy(Request $request): RedirectResponse
+	public function destroy(DestroyUserRequest $request): RedirectResponse
 	{
-		$request->validateWithBag('userDeletion', [
-			'password' => ['required', 'current_password'],
-		]);
 		$user = $request->user();
 		Auth::logout();
 		$user->delete();

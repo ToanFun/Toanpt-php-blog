@@ -12,17 +12,17 @@
 	  @foreach($posts as $post)
 		  <tr>
 			  <td>
-				  <a href="{{ route('admin.posts.edit', $post->id) }}">
+				  <a href="{{ route('admin.posts.edit', $post->id) }}" class="text-decoration-none">
 					  {{ $post->title }}
 				  </a>
 			  </td>
 			  <td>
-				  <a href="#">
+				  <a href="{{ route('admin.users.edit',  $post->author->id) }}" class="text-decoration-none">
 					  {{ $post->author->name }}
 				  </a>
 			  </td>
 			  <td>@customizeDate($post->updated_at, 'd/m/Y H:i:s')</td>
-			  <td>
+			  <td class="d-flex justify-content-end">
 				  <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary btn-sm">
 					  <x-icon name="edit" />
 				  </a>

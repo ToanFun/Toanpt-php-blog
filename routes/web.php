@@ -42,7 +42,6 @@ Route::middleware('auth')->group(function () {
 	Route::patch('/profile', [UserController::class, 'update'])->name('users.update');
 	Route::delete('/profile', [UserController::class, 'destroy'])->name('users.destroy');
 	Route::get('verify-email', [VerificationController::class, 'notice'])->name('verification.notice');
-  Route::get('verify-email/{id}/{hash}', [VerificationController::class, 'verify'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
   Route::post('email/verification-notification', [VerificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
   Route::get('confirm-password', [ConfirmPasswordController::class, 'show'])->name('password.confirm');
   Route::post('confirm-password', [ConfirmPasswordController::class, 'store']);

@@ -2,42 +2,33 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Constants\CommonConstant;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class VerificationController extends Controller
 {
-	/*
-	|--------------------------------------------------------------------------
-	| Email Verification Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller is responsible for handling email verification for any
-	| user that recently registered with the application. Emails may also
-	| be re-sent if the user didn't receive the original email message.
-	|
-	*/
-
-	use VerifiesEmails;
-
 	/**
-	 * Where to redirect users after verification.
-	 *
-	 * @var string
+	 * Display the email verification prompt.
 	 */
-	protected $redirectTo = RouteServiceProvider::HOME;
-
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
+	public function notice(Request $request): RedirectResponse|View
 	{
-		$this->middleware('auth');
-		$this->middleware('signed')->only('verify');
-		// Set rate limiting for request api. Example: 6 requests every 1 minutes
-		$this->middleware('throttle:6,1')->only('verify', 'resend');
+		return $request->user()->hasVerifiedEmail()
+						? redirect()->intended(CommonConstant::HOME)
+						: view('auth.verify');
 	}
+	/**
+	 * Send a new email verification notification.
+	 */
+	public function store(Request $request): RedirectResponse
+	{
+		if ($request->user()->hasVerifiedEmail()) {
+			return redirect()->intended(CommonConstant::HOME);
+		}
+		$request->user()->sendEmailVerificationNotification();
+		return back()->with('status', 'verification-link-sent');
+	}
+
 }
