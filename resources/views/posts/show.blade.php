@@ -5,7 +5,7 @@
 		<h1>{{ $post->title }}</h1>
 		<div class="mb-3">
 			<small class="text-body-secondary">
-				<a href="{{ route('users.show', $post->author->id) }}">
+				<a href="{{ route('users.show', $post->author->id) }}" class="text-decoration-none">
 					{{ $post->author->name }}
 				</a>
 			</small>

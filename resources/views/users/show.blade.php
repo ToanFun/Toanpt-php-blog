@@ -13,7 +13,7 @@
           </div>
         </div>
         @owner($user->id)
-          <a href="#" class="btn btn-primary btn-sm float-end">
+          <a href="{{ route('users.edit') }}" class="btn btn-primary btn-sm float-end">
             Edit profile
           </a>
         @endowner

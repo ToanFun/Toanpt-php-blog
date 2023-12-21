@@ -9,6 +9,7 @@ use App\Models\Scopes\PostScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Helpers\Constants\PostConstant;
 use Illuminate\Contracts\Pagination\Paginator;
+use App\Exceptions;
 
 class Post extends Model
 {

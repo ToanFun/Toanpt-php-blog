@@ -1,13 +1,13 @@
 <div class="col">
-  <x-card>
+  <x-card class="post-card">
     <h4 class="card-title">
-      <a href="{{ route('posts.show', $post->id) }}" data-turbo-frame="_top">
+      <a href="{{ route('posts.show', $post->id) }}" data-turbo-frame="_top" class="text-dark text-decoration-none">
         {{ $post->title }}
       </a>
     </h4>
     <p class="card-text">
       <small class="text-body-secondary">
-        <a href="{{ route('users.show', $post->author->id) }}" data-turbo-frame="_top">
+        <a href="{{ route('users.show', $post->author->id) }}" data-turbo-frame="_top" class="text-decoration-none">
           {{ $post->author->name }}
         </a>
       </small>

@@ -1,6 +1,6 @@
 <x-card class='mb-3'>
   <h4 class="card-title">
-    <a href="{{ route('posts.show', $post->id) }}">
+    <a href="{{ route('posts.show', $post->id) }}" class="text-dark text-decoration-none">
       {{ $post->title }}
     </a>
   </h4>
