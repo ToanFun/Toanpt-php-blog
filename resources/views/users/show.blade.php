@@ -12,6 +12,11 @@
             {{ $posts_count }}
           </div>
         </div>
+        @owner($user->id)
+          <a href="#" class="btn btn-primary btn-sm float-end">
+            Edit profile
+          </a>
+        @endowner
       </x-card>
     </div>
   </div>
