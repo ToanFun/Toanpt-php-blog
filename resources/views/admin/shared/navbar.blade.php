@@ -1,5 +1,5 @@
 <nav class="navbar bg-dark fixed-top navbar-expand-lg" data-bs-theme="dark">
-  <div class="container w-75">
+  <div class="container">
 	  <!-- Branding Image -->
 	  <a href="{{ route('home') }}" class="navbar-brand">
 		  {{ config('app.name', 'Laravel') }}
