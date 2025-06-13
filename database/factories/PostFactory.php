@@ -22,6 +22,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'content' => $this->faker->paragraph(),
+            'posted_at' => now(),
             'author_id' => User::factory(),
         ];
     }

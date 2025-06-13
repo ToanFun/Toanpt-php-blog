@@ -49,9 +49,9 @@ class PostController extends Controller
      */
     public function store(PostsRequest $request): RedirectResponse
     {
-        $post = Post::create($request->only(['title', 'content', 'author_id']));
+        $post = Post::create($request->only(['title', 'content']));
 
-        return redirect()->route('admin.posts.edit', $post->id)->withSuccess(__('posts.created'));
+        return redirect()->route('admin.posts.edit', $post)->withSuccess(__('posts.created'));
     }
 
     /**
