@@ -1,1 +1,0 @@
-import{T as t}from"./bootstrap.esm-d46d4ad1.js";$("#sidenavToggler").on("click",function(o){o.preventDefault(),$("body").toggleClass("sidenav-toggled")});document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(o=>{new t(o,{template:'<div class="tooltip navbar-sidenav-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'})});
